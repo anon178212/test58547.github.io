@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My experiment</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-survey-html-form.js"></script> <!-- plugin for free text questions -->
+    <script src="jspsych/plugin-pipe.js"></script> <!-- plugin for the datapipe extension -->
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+
+    // replace this with your experiment ID from pipe.jspsych.org
+    const expID = "EuqCH8Fapnhb";
+
+    var jsPsych = initJsPsych({});
+
+    const participant_id = jsPsych.randomization.randomID(10);
+    jsPsych.data.addProperties({participant_id: participant_id});
+
+    var trial = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p>Enter the values of your choice</b></p>',
+      html: '<p> Value: <input name="x1" type="text" /> Values: <input name="x2" type="text" /></p>'
+    };
+
+    const save_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: expID,
+      filename: `${participant_id}.csv`,
+      data_string: ()=>jsPsych.data.get().csv()
+    };
+
+    timeline = [trial, save_data];
+
+    jsPsych.run(timeline); 
+
+  </script>
+</html>
