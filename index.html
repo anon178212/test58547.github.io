@@ -11,6 +11,12 @@
   <body></body>
   <script>
 
+    pavlovia_finish = {
+        type: jsPsychPavlovia,
+        command: "finish",
+        
+    };
+
     // replace this with your experiment ID from pipe.jspsych.org
     const expID = "EuqCH8Fapnhb";
 
@@ -22,7 +28,7 @@
     var trial = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p>Enter the values of your choice</b></p>',
-      html: '<p> Value: <input name="x1" type="text" /> Value: <input name="x2" type="text" /></p>'
+      html: '<p> Value: <input name="x1" type="text" /> Values: <input name="x2" type="text" /></p>'
     };
 
     const save_data = {
@@ -30,7 +36,10 @@
       action: "save",
       experiment_id: expID,
       filename: `${participant_id}.csv`,
-      data_string: ()=>jsPsych.data.get().csv()
+      data_string: ()=>jsPsych.data.get().csv(),
+      on_finish: function () {
+        document.body.innerHTML = '<p>Completion code: CEPI3UU0</p>';
+            }
     };
 
     timeline = [trial, save_data];
@@ -39,3 +48,4 @@
 
   </script>
 </html>
+
